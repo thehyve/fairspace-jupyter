@@ -1,48 +1,5 @@
-# Hyperspace that this workspace is connected to
-hyperspace:
-  domain: hyperspace.ci.fairway.app
-  keycloak:
-    username: keycloak
-    password: keycloak-ci-123
-    realm: ci
-    clientSecret: 4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
-
-# Settings for the workspace
-workspace:
-  ingress:
-    domain: workspace.ci.fairway.app
-    tls:
-      certificate:
-        dns01Provider: gke
-  enableExperimentalFeatures: true
-  configurationScripts:
-    keycloak:
-      enabled: true
-      pullPolicy: IfNotPresent
-
-pluto:
-  image:
-    pullPolicy: Always
-    
-# Specific settings for Saturn subchart
-saturn:
-  image:
-    pullPolicy: Always
-  mail:
-    mail.from: pavel@thehyve.nl
-    mail.user: AKIAISXHGXUIMMU75YVA
-    mail.password: Avjpey3XBSvnlPfWGTS2qEjiJykvbDJtj6zWW3fCZILl
-    mail.transport.protocol: smtp
-    mail.smtp.auth: true
-    mail.smtp.host: email-smtp.us-east-1.amazonaws.com
-    mail.smtp.port: 587
-    mail.smtp.starttls.enable: true
-
-
-# Specific settings for Mercury subchart
-mercury:
-  image:
-    pullPolicy: Always
+ingress:
+  domain: jupyter.workspace.ci.fairway.app
 
 # Specific settings for JupyterHub subchart
 jupyterhub:
