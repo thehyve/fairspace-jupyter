@@ -17,7 +17,7 @@ keycloak:
 configurationScripts:
   keycloak:
     enabled: true
-    image: eu.gcr.io/fairspace-207108/keycloak-configuration:0.1.3-SNAPSHOT
+    image: eu.gcr.io/fairspace-207108/keycloak-configuration:0.1.3
     pullPolicy: IfNotPresent
     resources:
       requests:
