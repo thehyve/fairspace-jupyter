@@ -1,27 +1,26 @@
-{{- $ingress := .Values.workspace.ingress -}}
+{{- $ingress := .Values.ingress -}}
 {{- if $ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "workspace.name" . }}-jupyterhub-ingress
-{{- with $ingress.annotations.jupyter }}
+  name: jupyterhub-ingress
+{{- with $ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-    app: {{ template "workspace.name" . }}
-    chart: {{ template "workspace.chart" . }}
+    chart: {{ .Chart.Name }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 spec:
 {{- if $ingress.tls.enabled }}
   tls:
     - hosts:
-      - {{ template "jupyterhub.hostname" $ }}
-      secretName: {{ template "workspace.tlsSecretName" $ }}
+      - {{ $ingress.domain }}
+      secretName: {{ template "tlsSecretName" $ }}
 {{- end }}
   rules:
-    - host: {{ template "jupyterhub.hostname" $ }}
+    - host: {{ $ingress.domain }}
       http:
         paths:
           - path: /

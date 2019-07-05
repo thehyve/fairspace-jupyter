@@ -1,48 +1,13 @@
-# Default values for vre.
+# Default values for jupyter-fairspace.
 # This is a YAML-formatted file.
-
-# The fairspace container images are in a private repository
-# See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-# on how to store and specify the credentials for it
-imagePullSecrets: {}
-
-# Set specific workspace name. Defaults to release name
-# Please note that if this is set, also set it for pluto in `pluto.workspace.name`
-nameOverride:
-
-# Hyperspace that this workspace is connected to
-# Please note that pluto also has to know about the
-# keycloak baseUrl and realm, see the pluto configuration
-hyperspace:
-    tls: true
-    domain:
-    locationOverrides:
-        keycloak:
-
-    # TODO: determine better way to handle keycloak credentials
-    # Keycloak credentials are needed to setup the workspace (e.g. users, clients)
-    # in keycloak. Please note that this is not a sustainable way of doing, due
-    # to the sensitive nature of these parameters
-    #
-    # We could either:
-    # - have the hyperspace setup keycloak itself, when creating a new workspace
-    # - use temporary credentials for setting up these users
-    # - ...
-    keycloak:
-        username:
-        password:
-        loginRealm: master
-        realm:
-        clientSecret:
 
 # Setup ingress for workspace components
 ingress:
     enabled: true
     domain:
     annotations:
-      jupyter:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/proxy-body-size: 10g
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 10g
     tls:
         enabled: true
         secretNameOverride:

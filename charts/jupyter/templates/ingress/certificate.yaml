@@ -1,23 +1,21 @@
-{{- $ingress := .Values.workspace.ingress -}}
+{{- $ingress := .Values.ingress -}}
 {{- if $ingress.enabled -}}
 {{- if $ingress.tls.enabled -}}
 {{- if $ingress.tls.certificate.obtain -}}
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: {{ .Release.Name }}-workspace
+  name: jupyter-certificate
   labels:
-    app: {{ template "workspace.name" . }}
-    chart: {{ template "workspace.chart" . }}
+    chart: {{ .Chart.Name }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 spec:
-  secretName: {{ template "workspace.tlsSecretName" . }}
+  secretName: {{ template "tlsSecretName" $ }}
 {{- with $ingress.tls.certificate.issuerRef }}
   issuerRef:
 {{ toYaml . | indent 4 }}
 {{- end }}
-  commonName: '*.{{ $ingress.domain }}'
   dnsNames:
   - '{{ $ingress.domain }}'
   acme:
@@ -25,7 +23,6 @@ spec:
     - dns01:
         provider: {{ $ingress.tls.certificate.dns01Provider}}
       domains:
-      - '*.{{ $ingress.domain }}'
       - '{{ $ingress.domain }}'
 {{- end -}}
 {{- end -}}
