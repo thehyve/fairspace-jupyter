@@ -54,12 +54,15 @@ installation.
 | `ingress.tls.secretNameOverride`  | If set, this secret name is used for loading certificates for TLS. | `tls-<release name>` |
 | `ingress.tls.certificate.obtain`  | If set, a `Certificate` object will be created, such that [cert-manager](https://cert-manager.readthedocs.io/en/latest/) will request a certificate automatically. | true |
 
-#### Pluto parameters
+#### Keycloak parameters
 | Parameter  | Description  | Default |
 |---|---|---|
-| `pluto.keycloak.baseUrl` | Base url of the keycloak installation, with scheme, without /auth. For example: `https://keycloak.hyperspace.fairspace.app`  |   |
-| `pluto.keycloak.realm`   | Keycloak realm that is used for this hyperspace.  |   |
-| `pluto.keycloak.redirectAfterLogoutUrl`   | URL to redirect the user to after logging out  |   |
+| `keycloak.baseUrl` | Base url of the keycloak installation, with scheme, without /auth. For example: `https://keycloak.hyperspace.fairspace.app`  |   |
+| `keycloak.realm`   | Keycloak realm that is used for this hyperspace.  |   |
+| `keycloak.loginRealm`   | By default the keycloak user logs in to the master realm. However, the script can also be run by a realm-admin of the realm that must be configured. Please note that the user needs the realm-management/realm-admin to configure the workspace.  |   |
+| `keycloak.username`   | Username to use for the keycloak admin user.  |   |
+| `keycloak.password`   | Password to use for the keycloak admin user  |   |
+| `jupyterhub.auth.custom.config.client_id`  | Client ID of the client to use for OpenID |   |
 
 #### Tool configuration
 Configuration settings for specific applications should be put under a corresponding section in config.yaml:
