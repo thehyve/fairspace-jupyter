@@ -1,5 +1,8 @@
 ingress:
   domain: jupyter.workspace.ci.fairway.app
+  tls:
+    certificate:
+      dns01Provider: gke
 
 # Specific settings for JupyterHub subchart
 jupyterhub:

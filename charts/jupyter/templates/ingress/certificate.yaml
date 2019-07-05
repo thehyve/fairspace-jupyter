@@ -21,7 +21,7 @@ spec:
   acme:
     config:
     - dns01:
-        provider: {{ $ingress.tls.certificate.dns01Provider}}
+        provider: {{ $ingress.tls.certificate.dns01Provider }}
       domains:
       - '{{ $ingress.domain }}'
 {{- end -}}
