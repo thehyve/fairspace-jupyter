@@ -13,3 +13,12 @@ Create a name for the tls secret for jupyter-workspace
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "jupyter.url" -}}
+{{- if .Values.ingress.tls.enabled -}}
+https://{{ .Values.ingress.domain }}
+{{- else -}}
+http://{{ .Values.ingress.domain }}
+{{- end -}}
+{{- end -}}
+

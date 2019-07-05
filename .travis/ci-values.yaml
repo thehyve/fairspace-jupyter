@@ -1,3 +1,9 @@
+keycloak:
+  baseUrl: https://keycloak.hyperspace.ci.fairway.app/auth
+  username: keycloak
+  password: keycloak-ci-123
+  realm: ci
+
 ingress:
   domain: jupyter.workspace.ci.fairway.app
   tls:

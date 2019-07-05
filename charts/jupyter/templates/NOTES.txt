@@ -13,11 +13,7 @@ You can access jupyter via
 
 {{- if .Values.ingress.enabled }}
 
-    {{- if .Values.ingress.tls.enabled }}
-      https://{{ .Values.ingress.domain }}
-    {{- else }}
-      http://{{ .Values.ingress.domain }}
-    {{- end }}
+    {{ template "jupyter.url" . }}
 
 {{- else }}
 
