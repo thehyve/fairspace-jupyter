@@ -80,7 +80,7 @@ jobs:
 notifications:
   slack:
     rooms:
-     - secure: "xujLTGH8Vsmm3HDs02/utkTjhV+X4PY0FLOPdDUg0A38RZRgtQ+TeKerZmVBivK958e1KzsL/wPhTdeOHm7DJnanvWs1Jkw3mgbrHcaiagGjBdaEW8F30f2nsIibGWGDqzUZd5ifXYSugLNpJSpdFkVOseuWhUyTwjwrb4Ec/U/D24YvZUwX/kfi/waly57iFkxIkhq2XwcvtJtEDAzsKPhfwL67giV0flbGvCRL4xkvHERSr/HsXJ+V2NCaJ/qiSm8NkWq5gsrIIRkAA3mBSDs5Uq1ozAEI/DxN752O/OReghvjd249AEhzqJ0Ezyu0BjX3kYR1bP3gKB2/wOrLv069tAchY+KQF2F6Jh3AzGAEh0x5ARMsOxDkJybz5nXwMoYwsUjN9zGo8j9egbzkkxoVTK+MOf34jaSn7UBwAT239MaXB4Er1srJEZRqIzXVH0qwc/lC1QYX0fA89a5GdFjyN7EhfdlsvIp93nn8sjgj9iYsqS3yQboGBOSou1sboR8U/RsjPQowOkqMv8XIcjTUodirKNiRSdo5Wf+nGl4fgc3AS7rJcRaPLpbAvJZtXJzi4tutbU293q2k+bfvXbNz8R4IG7R4+MGdMWeSWDd9A0UBHgQkpXkb8Oxzr7PDAyDvhVEI5KewVy1PnV7dMCeRzSASjXTfPNnYpgBMw3E="
+     - secure: "eeFtXTWqUURPcxfyV1FB1Qkud41rx441uka1zCEfStHNCVItoGqEvlS22lyQhk4cl7vEdnl378i+UlXFgWWzuaYIEGL9JTa7+WErfigCjYSkLIujC2bciG02TOhHYe2Pq7PhkyA8gcs3uq89ytuRUTOiy/CIvyS2GbEQrsfxNJU1C5rY5XmOeMIhTRUUF44c4ohGh4QgAHvzynk033hOMuPyQrQUpd4uKhzy3saPtYAa+uPsvqojAryvwAnfojeY8qdtAesVKkF+XBA1i0FLIRt6W4XAp3N4KodwZ9uTUelC8RGgKrB3bdad4Gbe+5n+knd6Zhci1SbhV2l94u1g00obGlETh4QAv6x++zrCqS922pkPMWFY4A7NGInyynT3Hi484UBU1Z6h+2vjjJYj28OF7M79pIoR+zzIysco5xwXaH51U1ZJKfBzzJFKSKR104rwIM0X43l6v+/RLPOPL6MNJQ1TVFSdSonyJ7IWoF63n7PrxYgA4aaySrbTr9bZpM5XXikybwZGPAejeuHTmS0Vb+ge56v4SlF3zJ/9t7Kznp54rtrdnOV8g2Sf/pMmuAAeLlxN8YtymLdS6bk8QhTqBhJkP7eOkDTO13n9DVDYcMUTAn9EJ4tIyXUJRqXPgqvG4TmVLwb/BNOFey5Y4+W0DaY4nsC/JJiHttDzibs="
     template:
      - "Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository_slug}@%{branch}"
      - "Latest commit: %{commit_message} - by %{author}"
