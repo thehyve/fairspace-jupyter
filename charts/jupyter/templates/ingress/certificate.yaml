@@ -18,12 +18,7 @@ spec:
 {{- end }}
   dnsNames:
   - '{{ $ingress.domain }}'
-  acme:
-    config:
-    - dns01:
-        provider: {{ $ingress.tls.certificate.dns01Provider }}
-      domains:
-      - '{{ $ingress.domain }}'
+
 {{- end -}}
 {{- end -}}
 {{- end -}}

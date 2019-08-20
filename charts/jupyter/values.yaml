@@ -42,7 +42,6 @@ ingress:
             issuerRef:
                 name: letsencrypt-prod
                 kind: ClusterIssuer
-            dns01Provider: clouddns
 
 #####################################################################
 # Specific settings for JupyterHub subchart
