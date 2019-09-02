@@ -1,5 +1,5 @@
 keycloak:
-  baseUrl: https://keycloak.hyperspace.ci.fairway.app/auth
+  baseUrl: https://keycloak.ci.fairway.app/auth
   username: keycloak
   password: keycloak-ci-123
   realm: ci
@@ -16,7 +16,7 @@ jupyterhub:
       config:
         client_id: workspace-ci-pluto
         client_secret: 4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
-        openid_url: https://keycloak.hyperspace.ci.fairway.app/auth/realms/ci/protocol/openid-connect/
+        openid_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/
         session_url: https://workspace.ci.fairway.app/api/v1/account/tokens
   singleuser:
     image:
