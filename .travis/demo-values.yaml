@@ -1,5 +1,5 @@
 keycloak:
-  baseUrl: https://keycloak.hyperspace.demo.fairway.app/auth
+  baseUrl: https://keycloak.demo.fairway.app/auth
   username: keycloak
   password: keycloak-demo-123
   realm: demo
@@ -16,7 +16,7 @@ jupyterhub:
       config:
         client_id: workspace-demo-pluto
         client_secret: db67da94-fa31-47cd-8c42-0ed295790841
-        openid_url: https://keycloak.hyperspace.demo.fairway.app/auth/realms/demo/protocol/openid-connect/
+        openid_url: https://keycloak.demo.fairway.app/auth/realms/demo/protocol/openid-connect/
         session_url: https://workspace.demo.fairway.app/api/v1/account/tokens
   singleuser:
     extraEnv:
