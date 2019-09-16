@@ -1,3 +1,6 @@
+workspace:
+  id: workspace-demo
+  
 keycloak:
   baseUrl: https://keycloak.demo.fairway.app/auth
   username: keycloak
