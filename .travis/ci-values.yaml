@@ -1,3 +1,6 @@
+workspace:
+  id: workspace-ci
+
 keycloak:
   baseUrl: https://keycloak.ci.fairway.app/auth
   username: keycloak
