@@ -154,7 +154,7 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
             resp = yield http_client.fetch(req)
             cookies = resp.headers.get_list('Set-Cookie')
             for cookie in cookies:
-                if ''.startswith('JSESSIONID='):
+                if cookie.startswith('JSESSIONID='):
                     session_id = cookie[len('JSESSIONID='):]
 
         return {
