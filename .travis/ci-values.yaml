@@ -20,6 +20,7 @@ jupyterhub:
         client_id: fairspace-ci-private
         client_secret: 4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
         openid_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/
+        session_url: https://fairspace.ci.fairway.app/api/v1/users/current
   singleuser:
     image:
       pullPolicy: Always

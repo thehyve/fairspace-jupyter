@@ -147,10 +147,9 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
         session_id = ''
         if self.session_url:
             req = HTTPRequest(self.session_url,
-                              method='POST',
-                              headers={'Content-Type': 'application/json'},
+                              method='GET',
+                              headers={'Authorization': 'Bearer ' + access_token},
                               validate_cert=self.tls_verify,
-                              body=json.dumps({'accessToken': access_token, 'refreshToken': refresh_token})
                               )
             resp = yield http_client.fetch(req)
             resp_json = json.loads(resp.body.decode('utf8', 'replace'))
