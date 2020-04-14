@@ -152,8 +152,10 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
                               validate_cert=self.tls_verify,
                               )
             resp = yield http_client.fetch(req)
-            resp_json = json.loads(resp.body.decode('utf8', 'replace'))
-            session_id = resp_json['sessionId']
+            cookies = resp.headers.get_list('Set-Cookie')
+            for cookie in cookies:
+                if ''.startswith('JSESSIONID='):
+                    session_id = cookie[len('JSESSIONID='):]
 
         return {
             'name': oauth_user.get(self.username_key),
