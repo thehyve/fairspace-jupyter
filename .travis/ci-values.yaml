@@ -8,7 +8,7 @@ keycloak:
   realm: ci
 
 ingress:
-  domain: jupyter.workspace.ci.fairway.app
+  domain: jupyter.fairspace.ci.fairway.app
 
 # Specific settings for JupyterHub subchart
 jupyterhub:
