@@ -150,7 +150,7 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
                               validate_cert=self.tls_verify,
                               )
             resp = yield http_client.fetch(req)
-            self.log.error("Headers received from Saturn: %s", resp.headers)
+            self.log.error("Headers received from Saturn: %s", list(resp.headers.get_all()))
             cookies = resp.headers.get_list('Set-Cookie')
 
             for cookie in cookies:
