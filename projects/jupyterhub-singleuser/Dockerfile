@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook:dc9744740e12
+FROM jupyter/scipy-notebook:d4cbf2f80a2a
 
 USER root
 
@@ -24,3 +24,4 @@ RUN chmod u+s /sbin/mount.davfs
 RUN echo 'http://localhost/webdav/ /home/jovyan/collections davfs user,noauto,file_mode=600,dir_mode=700 0 1' >> /etc/fstab
 RUN usermod -a -G davfs2 jovyan
 
+USER jovyan
