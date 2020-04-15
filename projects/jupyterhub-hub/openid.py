@@ -2,7 +2,6 @@
 OpenID Connect Authenticator
 """
 
-
 import json
 import os
 import base64
@@ -30,7 +29,6 @@ class OpenIDConnectLoginHandler(OAuthLoginHandler, OpenIDConnectEnvMixin):
 
 
 class OpenIDConnectOAuthenticator(OAuthenticator):
-
     openid_url = Unicode(
         os.environ.get('OPENID_CONNECT_URL', ''),
         help="OpenID Connect endpoint URL"
@@ -152,10 +150,15 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
                               validate_cert=self.tls_verify,
                               )
             resp = yield http_client.fetch(req)
+            self.log.error("Headers received from Saturn: %s", resp.headers)
             cookies = resp.headers.get_list('Set-Cookie')
+
             for cookie in cookies:
                 if cookie.startswith('JSESSIONID='):
                     session_id = cookie[len('JSESSIONID='):]
+                    sep = session_id.find(';')
+                    if sep > 0:
+                        session_id = session_id[:sep]
 
         return {
             'name': oauth_user.get(self.username_key),
@@ -179,7 +182,7 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
         OpenIDConnectEnvMixin._OAUTH_AUTHORIZE_URL = self._connect_url() + 'auth'
         return super().get_handlers(app)
 
-class LocalOpenIDConnectOAuthenticator(LocalAuthenticator, OpenIDConnectOAuthenticator):
 
+class LocalOpenIDConnectOAuthenticator(LocalAuthenticator, OpenIDConnectOAuthenticator):
     """A version that mixes in local system user creation"""
     pass
