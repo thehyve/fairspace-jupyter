@@ -2,6 +2,9 @@ FROM jupyter/scipy-notebook:d4cbf2f80a2a
 
 USER root
 
+RUN groupadd -g $NB_GID -o ${NB_GROUP:-${NB_USER}}
+RUN usermod  -g $NB_GID -aG 100 $NB_USER
+
 RUN echo 'deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe' >> /etc/apt/sources.list.d/proposed-repositories.list
 RUN apt-get update && \
     apt-get install -y vim curl nginx davfs2 && \
