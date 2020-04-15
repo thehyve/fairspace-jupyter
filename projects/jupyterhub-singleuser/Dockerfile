@@ -12,7 +12,8 @@ EXPOSE 80
 RUN echo "$NB_USER ALL=(ALL) NOPASSWD: /usr/sbin/nginx" >> /etc/sudoers
 
 ADD start /
-RUN chmod a+rx /start
+RUN chown jovyan:users /start
+RUN chmod u+x /start
 
 ADD atomiclargefilemanager.py /opt/conda/lib/python3.7/site-packages/notebook/services/contents/
 RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \

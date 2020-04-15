@@ -20,9 +20,9 @@ http {
 sudo nginx -c ~/.nginx.conf
 
 mkdir ~/collections
-mkdir -p ~/.davfs2/cache/localhost-webdav-v1+home-jovyan-collections+jovyan
-chmod 700 ~/.davfs2/cache/localhost-webdav-v1+home-jovyan-collections+jovyan
-chmod a-s ~/.davfs2/cache/localhost-webdav-v1+home-jovyan-collections+jovyan
+mkdir -p ~/.davfs2/cache/localhost-webdav+home-jovyan-collections+jovyan
+chmod 700 ~/.davfs2/cache/localhost-webdav+home-jovyan-collections+jovyan
+chmod a-s ~/.davfs2/cache/localhost-webdav+home-jovyan-collections+jovyan
 echo "
 delay_upload    0
 ask_auth        0
