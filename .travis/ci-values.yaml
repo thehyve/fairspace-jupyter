@@ -25,6 +25,9 @@ jupyterhub:
     imagePullPolicy: Always
     extraEnv:
       WORKSPACE_URL: https://fairspace.ci.fairway.app
+      GRANT_SUDO: "yes"
+      NOTEBOOK_ARGS: "--allow-root"
+    uid: 0
   hub:
     imagePullPolicy: Always
     extraEnv:
