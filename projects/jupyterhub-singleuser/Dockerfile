@@ -2,7 +2,6 @@ FROM jupyter/scipy-notebook:d4cbf2f80a2a
 
 USER root
 
-# RUN echo 'deb http://archive.ubuntu.com/ubuntu/ bionic-proposed restricted main multiverse universe' >> /etc/apt/sources.list.d/proposed-repositories.list
 RUN apt-get update && \
     apt-get install -y vim curl nginx fusedav && \
     rm -rf /var/lib/apt/lists/*
