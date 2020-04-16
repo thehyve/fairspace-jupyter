@@ -82,8 +82,7 @@ jupyterhub:
     extraConfig:
       customConfig: |
         c.KubeSpawner.cmd = ['/start']
-        c.KubeSpawner.fs_gid = 100
-        c.KubeSpawner.singleuser_privileged = True
+        c.KubeSpawner.privileged = True
         c.Authenticator.auto_login = True
     # Requests values are set in Jupyterhub chart.
     resources:
