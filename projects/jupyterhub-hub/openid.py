@@ -157,6 +157,7 @@ class OpenIDConnectOAuthenticator(OAuthenticator):
                     sep = session_id.find(';')
                     if sep > 0:
                         session_id = session_id[:sep]
+                    break
 
         return {
             'name': oauth_user.get(self.username_key),
