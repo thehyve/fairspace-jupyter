@@ -8,8 +8,8 @@ http {
 
     server {
         listen 80;
-        location /webdav/ {
-            proxy_pass         $WORKSPACE_URL/api/v1;
+        location /api/v1/ {
+            proxy_pass         $WORKSPACE_URL;
             proxy_redirect     off;
             proxy_set_header   Cookie JSESSIONID=$SESSION_ID;
         }
@@ -21,4 +21,4 @@ sudo nginx -c ~/.nginx.conf
 
 mkdir ~/collections
 
-fusedav http://localhost:80/webdav/ ~/collections & jupyter-labhub
+fusedav http://localhost:80/api/v1/webdav/ ~/collections & jupyter-labhub
