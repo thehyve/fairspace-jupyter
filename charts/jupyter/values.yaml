@@ -50,12 +50,13 @@ jupyterhub:
   auth:
     type: custom
     custom:
-      className: oauthenticator.openid.OpenIDConnectOAuthenticator
+      className: oauthenticator.fairspace_auth.FairspaceOAuthenticator
       config:
         enable_auth_state: True
         client_id:
         client_secret:
-        openid_url:
+        token_url:
+        userdata_url:
         session_url:
     scopes:
       - offline_access

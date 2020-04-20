@@ -21,4 +21,4 @@ sudo nginx -c ~/.nginx.conf
 
 mkdir ~/collections
 
-fusedav http://localhost:80/api/v1/webdav/ ~/collections & jupyter-labhub
+fusedav http://localhost:80/api/v1/webdav/ ~/collections & jupyterhub-singleuser
