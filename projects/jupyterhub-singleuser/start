@@ -17,6 +17,11 @@ http {
 }
 " > ~/.nginx.conf
 
+echo "
+envs_dirs:
+  - /home/jovyan/my-conda-envs/
+" > ~/.condarc
+
 sudo nginx -c ~/.nginx.conf
 
 mkdir ~/collections
