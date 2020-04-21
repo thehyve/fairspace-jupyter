@@ -53,6 +53,7 @@ jupyterhub:
       className: oauthenticator.fairspace.FairspaceOAuthenticator
       config:
         enable_auth_state: True
+        username_key: preferred_username
         client_id:
         client_secret:
         token_url:
