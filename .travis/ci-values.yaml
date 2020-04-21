@@ -24,11 +24,13 @@ jupyterhub:
         userdata_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/userinfo
         session_url: https://fairspace.ci.fairway.app
   singleuser:
-    imagePullPolicy: Always
+    image:
+      pullPolicy: Always
     extraEnv:
       WORKSPACE_URL: https://fairspace.ci.fairway.app
   hub:
-    imagePullPolicy: Always
+    image:
+      pullPolicy: Always
     extraEnv:
       JUPYTERHUB_CRYPT_KEY: 61efcb6349da848c361e13c0edfac1486d636ef89a2b7cbba610e83d8a332026
   proxy:
