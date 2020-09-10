@@ -54,6 +54,8 @@ jupyterhub:
       config:
         enable_auth_state: True
         username_key: preferred_username
+        extra_params:
+          scope: offline_access
         client_id:
         client_secret:
         token_url:
