@@ -19,6 +19,8 @@ class FairspaceOAuthenticator(GenericOAuthenticator):
         if self.session_url:
             auth_state = await user.get_auth_state()
             if auth_state:
+                # TODO: Remove me!
+                self.log.error('AUTH STATE: ' + str(auth_state))
                 req = HTTPRequest(self.session_url,
                                   method='GET',
                                   headers={'Authorization': 'Bearer ' + auth_state['access_token']},
