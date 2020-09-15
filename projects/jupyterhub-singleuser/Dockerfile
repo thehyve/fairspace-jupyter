@@ -12,7 +12,8 @@ RUN chmod u+x /start
 
 ADD app.js /opt/proxy/
 ADD package.json /opt/proxy/
-RUN npm build /opt/proxy
+WORKDIR /opt/proxy
+RUN npm install
 
 ADD atomiclargefilemanager.py /opt/conda/lib/python3.7/site-packages/notebook/services/contents/
 RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
