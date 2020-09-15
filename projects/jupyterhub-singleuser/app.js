@@ -5,7 +5,7 @@ const GrantManager = require('keycloak-connect/middleware/auth-utils/grant-manag
 const Grant = require('keycloak-connect/middleware/auth-utils/grant');
 const Token = require('keycloak-connect/middleware/auth-utils/token');
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 const realmUrl = process.env.REALM_URL;
 const targetUrl = process.env.TARGET_URL;
 const clientId = process.env.CLIENT_ID;

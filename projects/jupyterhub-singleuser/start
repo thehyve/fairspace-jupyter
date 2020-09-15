@@ -9,4 +9,4 @@ mkdir ~/collections
 
 cd /etc/proxy/
 
-node app.js & fusedav http://localhost:80/api/v1/webdav/ ~/collections & jupyterhub-singleuser
+node app.js & fusedav http://localhost:3000/api/v1/webdav/ ~/collections & jupyterhub-singleuser
