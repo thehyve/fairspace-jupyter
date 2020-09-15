@@ -22,12 +22,11 @@ jupyterhub:
         authorize_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/auth
         token_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/token
         userdata_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/userinfo
-        session_url: https://fairspace.ci.fairway.app
   singleuser:
     image:
       pullPolicy: Always
     extraEnv:
-      WORKSPACE_URL: https://fairspace.ci.fairway.app
+      TARGET_URL: https://fairspace.ci.fairway.app
   hub:
     image:
       pullPolicy: Always

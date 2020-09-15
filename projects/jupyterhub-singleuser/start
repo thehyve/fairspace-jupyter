@@ -1,29 +1,12 @@
 #! /bin/bash
 
 echo "
-events { worker_connections 1024; }
-
-http {
-    client_max_body_size 8192M;
-
-    server {
-        listen 80;
-        location /api/v1/ {
-            proxy_pass         $WORKSPACE_URL;
-            proxy_redirect     off;
-            proxy_set_header   Cookie JSESSIONID=$SESSION_ID;
-        }
-    }
-}
-" > ~/.nginx.conf
-
-echo "
 envs_dirs:
   - /home/jovyan/my-conda-envs/
 " > ~/.condarc
 
-sudo nginx -c ~/.nginx.conf
-
 mkdir ~/collections
 
-fusedav http://localhost:80/api/v1/webdav/ ~/collections & jupyterhub-singleuser
+cd /etc/proxy/
+
+node app.js & fusedav http://localhost:80/api/v1/webdav/ ~/collections & jupyterhub-singleuser

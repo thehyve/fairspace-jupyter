@@ -60,7 +60,6 @@ jupyterhub:
         client_secret:
         token_url:
         userdata_url:
-        session_url:
     scopes:
       - offline_access
   singleuser:
@@ -69,7 +68,7 @@ jupyterhub:
       tag: RELEASEVERSION
     defaultUrl: "/lab"
     extraEnv:
-      WORKSPACE_URL:
+      TARGET_URL:
     cpu:
       limit: 0.5
       guarantee: 0.1
