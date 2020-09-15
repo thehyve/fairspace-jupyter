@@ -6,16 +6,13 @@ RUN apt-get update && \
     apt-get install -y vim curl fusedav && \
     rm -rf /var/lib/apt/lists/*
 
-EXPOSE 80
-
 ADD start /
 RUN chown jovyan:users /start
 RUN chmod u+x /start
 
-ADD app.js /etc/proxy/
-ADD package.json /etc/proxy/
-WORKDIR /etc/proxy
-RUN npm install
+ADD app.js /opt/proxy/
+ADD package.json /opt/proxy/
+RUN npm build /opt/proxy
 
 ADD atomiclargefilemanager.py /opt/conda/lib/python3.7/site-packages/notebook/services/contents/
 RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
