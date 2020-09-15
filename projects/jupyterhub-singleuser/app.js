@@ -15,6 +15,9 @@ const refresh_token = new Token(process.env.REFRESH_TOKEN, clientId);
 refresh_token.isExpired = () => false;
 
 const grantManager = new GrantManager({realmUrl, clientId, secret});
+
+grantManager.validateToken = (token, expectedType) => Promise.resolve(token);
+
 const grant = new Grant({refresh_token});
 
 const app = express();
