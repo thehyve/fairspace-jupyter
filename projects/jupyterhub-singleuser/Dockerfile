@@ -24,3 +24,4 @@ RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
 RUN conda install nb_conda_kernels -y
 
 USER jovyan
+WORKDIR /home/jovyan
