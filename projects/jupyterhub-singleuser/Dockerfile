@@ -22,6 +22,7 @@ RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "c.FileCheckpoints.checkpoint_dir = '/home/jovyan/.notebookCheckpoints'" >> /etc/jupyter/jupyter_notebook_config.py
 
 RUN pip install sparqlkernel
+RUN jupyter sparqlkernel install
 
 RUN conda install nb_conda_kernels -y
 
