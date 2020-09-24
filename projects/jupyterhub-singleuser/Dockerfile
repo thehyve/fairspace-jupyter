@@ -21,10 +21,13 @@ RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.contents_manager_class = AtomicLargeFileManager" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "c.FileCheckpoints.checkpoint_dir = '/home/jovyan/.notebookCheckpoints'" >> /etc/jupyter/jupyter_notebook_config.py
 
-RUN pip install sparqlkernel
-RUN jupyter sparqlkernel install
+RUN pip install sparqlkernel && \
+    jupyter sparqlkernel install
 
 RUN conda install nb_conda_kernels -y
+
+RUN conda install jupyter_conda -y && \
+    jupyter labextension install jupyterlab_conda
 
 USER jovyan
 WORKDIR /home/jovyan
