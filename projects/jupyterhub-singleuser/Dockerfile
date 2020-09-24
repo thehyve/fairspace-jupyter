@@ -26,8 +26,5 @@ RUN pip install sparqlkernel && \
 
 RUN conda install nb_conda_kernels -y
 
-RUN conda install jupyter_conda -y && \
-    jupyter labextension install jupyterlab_conda
-
 USER jovyan
 WORKDIR /home/jovyan
