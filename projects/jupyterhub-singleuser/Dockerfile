@@ -24,7 +24,5 @@ RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
 RUN pip install sparqlkernel && \
     jupyter sparqlkernel install
 
-RUN conda install nb_conda_kernels -y
-
 USER jovyan
 WORKDIR /home/jovyan
