@@ -47,6 +47,8 @@ ingress:
 # Specific settings for JupyterHub subchart
 #####################################################################
 jupyterhub:
+  rbac:
+    enabled: true
   auth:
     type: custom
     custom:
