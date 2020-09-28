@@ -1,6 +1,10 @@
 workspace:
   id: workspace-ci
 
+configurationScripts:
+  keycloak:
+    enabled: true
+
 keycloak:
   baseUrl: https://keycloak.ci.fairway.app/auth
   username: keycloak
