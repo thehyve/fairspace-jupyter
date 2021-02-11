@@ -7,4 +7,4 @@ envs_dirs:
 
 mkdir ~/collections
 
-NODE_PATH=/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/api/v1/webdav/ ~/collections & jupyterhub-singleuser
+NODE_PATH=/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/api/webdav/ ~/collections & jupyterhub-singleuser
