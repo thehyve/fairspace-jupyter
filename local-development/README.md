@@ -19,7 +19,7 @@ curl -s -d "client_id=${KEYCLOAK_CLIENT_ID}" -d "client_secret=${KEYCLOAK_CLIENT
 
 Create `.env` file:
 ```shell
-TARGET_URL=https://fairspace.ci.fairway.app
+TARGET_URL=https://fairspace.ci.fairway.app/api/webdav
 REALM_URL=https://keycloak.ci.fairway.app/auth/realms/ci
 CLIENT_ID=fairspace-ci-private
 CLIENT_SECRET=4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
@@ -37,4 +37,18 @@ docker build ../projects/jupyterhub-singleuser -t jupyter-local:latest
 
 ```shell
 docker run --name jupyter-dev --rm -it --env-file .env -p 8888:8888 --privileged jupyter-local:latest /start
+```
+
+## Mount external storages
+
+To mount external storage, together with the storage configured as a target, update a `targets.json` file:
+
+```json
+[
+  {
+    "name": "fairspace_test",
+    "url": "https://fairspace.test.fairway.app/api/webdav"
+  }
+]
+
 ```

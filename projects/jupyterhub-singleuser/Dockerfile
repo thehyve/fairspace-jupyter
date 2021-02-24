@@ -3,7 +3,7 @@ FROM jupyter/datascience-notebook:lab-2.0.1
 USER root
 
 RUN apt-get update && \
-    apt-get install -y vim curl fusedav && \
+    apt-get install -y vim curl fusedav jq && \
     rm -rf /var/lib/apt/lists/*
 
 ADD start /
@@ -12,6 +12,7 @@ RUN chmod u+x /start
 
 ADD app.js /opt/proxy/
 ADD package.json /opt/proxy/
+ADD targets.json /opt/proxy/
 WORKDIR /opt/proxy
 RUN npm install
 
@@ -26,7 +27,6 @@ RUN pip install sparqlkernel && \
 
 ENV JUPYTER_COMMAND=${JUPYTER_COMMAND:-jupyterhub-singleuser}
 
-RUN sudo chown -R jovyan:users /home/jovyan/.local/
-
+RUN chown jovyan:users /home/jovyan/.local/share/jupyter
 USER jovyan
 WORKDIR /home/jovyan
