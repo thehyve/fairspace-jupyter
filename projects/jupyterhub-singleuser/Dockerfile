@@ -24,5 +24,9 @@ RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
 RUN pip install sparqlkernel && \
     jupyter sparqlkernel install
 
+ENV JUPYTER_COMMAND=${JUPYTER_COMMAND:-jupyterhub-singleuser}
+
+RUN sudo chown -R jovyan:users /home/jovyan/.local/
+
 USER jovyan
 WORKDIR /home/jovyan
