@@ -5,19 +5,17 @@ envs_dirs:
   - /home/jovyan/my-conda-envs/
 " > ~/.condarc
 
-mkdir ~/collections
-NODE_PATH="/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/fairspace ~/collections"
+mkdir /home/jovyan/collections
+NODE_PATH=/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/api/webdav /home/jovyan/collections &
 
 TARGETS_FILE=/opt/proxy/targets.json
 
 if [ -f "${TARGETS_FILE}" ]; then
-  targets=$(jq '.' ${TARGETS_FILE})
-  for target in $(echo "${targets}" | jq -r '.[] | .name'); do
-     mkdir ~/${target}
-     NODE_PATH="${NODE_PATH} & fusedav http://localhost:3000/${target} ~/${target}"
-  done
+    targets=$(jq '.' "${TARGETS_FILE}")
+    for target in $(echo "${targets}" | jq -r '.[] | .name'); do
+        mkdir "/home/jovyan/${target}"
+        fusedav "http://localhost:3000/api/storages/${target}/webdav" "/home/jovyan/${target}" &
+    done
 fi
 
-NODE_PATH="${NODE_PATH} & ${JUPYTER_COMMAND}"
-
-eval NODE_PATH=$NODE_PATH
+${JUPYTER_COMMAND}

@@ -5,8 +5,6 @@ const GrantManager = require('keycloak-connect/middleware/auth-utils/grant-manag
 const Grant = require('keycloak-connect/middleware/auth-utils/grant');
 const Token = require('keycloak-connect/middleware/auth-utils/token');
 
-const externalTargets = require('./targets.json')
-
 const port = process.env.PORT || 3000;
 const realmUrl = process.env.REALM_URL;
 const target = process.env.TARGET_URL;
@@ -35,24 +33,9 @@ app.use((req, res, next) =>
             res.sendStatus(500);
         }));
 
-app.use('/fairspace', createProxyMiddleware({
+app.use(createProxyMiddleware({
     target,
-    changeOrigin: true,
-    pathRewrite: {
-        "^/fairspace": "/",
-    }
+    changeOrigin: true
 }));
-
-if (externalTargets && Array.isArray(externalTargets) && externalTargets.length > 0) {
-    externalTargets.forEach(exTarget => {
-        app.use(`/${exTarget.name}`, createProxyMiddleware({
-            target: exTarget.url,
-            changeOrigin: true,
-            pathRewrite: {
-                [`^/${exTarget.name}`]: '/'
-            },
-        }));
-    })
-}
 
 app.listen(port);
