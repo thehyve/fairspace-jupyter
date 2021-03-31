@@ -20,7 +20,8 @@ ADD atomiclargefilemanager.py /opt/conda/lib/python3.7/site-packages/notebook/se
 RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "from notebook.services.contents.atomiclargefilemanager import AtomicLargeFileManager" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.contents_manager_class = AtomicLargeFileManager" >> /etc/jupyter/jupyter_notebook_config.py && \
-    echo "c.FileCheckpoints.checkpoint_dir = '/home/jovyan/.notebookCheckpoints'" >> /etc/jupyter/jupyter_notebook_config.py
+    echo "c.FileCheckpoints.checkpoint_dir = '/home/jovyan/.notebookCheckpoints'" >> /etc/jupyter/jupyter_notebook_config.py && \
+    echo "c.FileManagerMixin.use_atomic_writing = False" >> /etc/jupyter/jupyter_notebook_config.py
 
 RUN pip install sparqlkernel && \
     jupyter sparqlkernel install
