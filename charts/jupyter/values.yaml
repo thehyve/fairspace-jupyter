@@ -71,6 +71,7 @@ jupyterhub:
     defaultUrl: "/lab"
     extraEnv:
       TARGET_URL:
+      EXTERNAL_TARGETS:
     cpu:
       limit: 0.5
       guarantee: 0.1

@@ -5,6 +5,15 @@ envs_dirs:
   - /home/jovyan/my-conda-envs/
 " > ~/.condarc
 
-mkdir ~/collections
+mkdir /home/jovyan/collections
+NODE_PATH=/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/api/webdav /home/jovyan/collections &
 
-NODE_PATH=/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/api/webdav/ ~/collections & jupyterhub-singleuser
+if [ ! -z "${EXTERNAL_TARGETS}" ]; then
+    IFS=','
+    for target in $EXTERNAL_TARGETS; do
+        mkdir "/home/jovyan/${target}"
+        fusedav "http://localhost:3000/api/storages/${target}/webdav" "/home/jovyan/${target}" &
+    done
+fi
+
+${JUPYTER_COMMAND}
