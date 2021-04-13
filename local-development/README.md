@@ -15,7 +15,7 @@ Create `.env` file:
     KEYCLOAK_USERNAME=user
     KEYCLOAK_PASSWORD=fairspace123
 
-    TARGET_URL=https://fairspace.ci.fairway.app/api/webdav
+    TARGET_URL=https://fairspace.ci.fairway.app
     REALM_URL=https://keycloak.ci.fairway.app/auth/realms/ci
     CLIENT_ID=fairspace-ci-private
     CLIENT_SECRET=4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
@@ -39,6 +39,12 @@ Create `.env` file:
     JUPYTER_COMMAND=jupyter-notebook
     ```
 
+To mount external storages that are configured in Fairspace, include `EXTERNAL_TARGETS` variable
+as a comma-separated list of unique storage names (same as used in Fairspace configuration):
+```shell
+EXTERNAL_TARGETS=test
+```
+
 Fetch refresh token:
 
 ```shell
@@ -56,19 +62,5 @@ docker build ../projects/jupyterhub-singleuser -t jupyter-local:latest
 #### Run image
 
 ```shell
-docker run --name jupyter-dev --rm -it --env-file .env -p 8888:8888 --privileged --volume $(pwd)/targets.json:/opt/proxy/targets.json jupyter-local:latest /start
-```
-
-## Mount external storages
-
-To mount external storage, together with the storage configured as a target, update a `targets.json` file:
-
-```json
-[
-  {
-    "name": "fairspace_test",
-    "url": "https://fairspace.test.fairway.app/api/webdav"
-  }
-]
-
+docker run --name jupyter-dev --rm -it --env-file .env -p 8888:8888 --privileged jupyter-local:latest /start
 ```
