@@ -17,7 +17,8 @@ jupyterhub:
     image:
       pullPolicy: Always
     extraEnv:
-      TARGET_URL: https://fairspace.ci.fairway.app/api/webdav
+      TARGET_URL: https://fairspace.ci.fairway.app
+      EXTERNAL_TARGETS: test
   hub:
     image:
       pullPolicy: Always
