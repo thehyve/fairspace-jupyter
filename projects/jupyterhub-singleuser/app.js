@@ -35,7 +35,7 @@ app.use((req, res, next) =>
 
 app.use(createProxyMiddleware({
     target,
-    changeOrigin: true,
+    changeOrigin: true
 }));
 
 app.listen(port);
