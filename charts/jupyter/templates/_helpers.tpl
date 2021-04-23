@@ -3,7 +3,7 @@ Create a name for the tls secret for jupyter-workspace
 */}}
 {{- define "tlsSecretName" -}}
 {{- if .Values.ingress.tls.secretNameOverride -}}
-{{- .Values.workspace.tls.secretNameOverride | trunc 63 | trimSuffix "-" -}}
+{{- .Values.ingress.tls.secretNameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
