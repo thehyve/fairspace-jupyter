@@ -4,9 +4,7 @@ kind: ConfigMap
 metadata:
   name: "{{.Release.Name}}-keycloak-config-map"
   labels:
-    heritage: {{.Release.Service | quote }}
-    release: {{.Release.Name | quote }}
-    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    {{- include "jupyter.labels" . | nindent 4 }}
 data:
   redirect.urls: |-
     {{ template "jupyter.url" $ }}/*
