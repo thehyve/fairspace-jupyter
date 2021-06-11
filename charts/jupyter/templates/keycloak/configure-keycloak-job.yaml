@@ -5,9 +5,7 @@ kind: Job
 metadata:
   name: "{{.Release.Name}}-keycloak-configuration"
   labels:
-    heritage: {{.Release.Service | quote }}
-    release: {{.Release.Name | quote }}
-    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    {{- include "jupyter.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "-5"
