@@ -1,18 +1,27 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 echo "
 envs_dirs:
   - /home/jovyan/my-conda-envs/
 " > ~/.condarc
 
-mkdir -p /home/jovyan/collections
-NODE_PATH=/opt/proxy/ node /opt/proxy/app.js & fusedav http://localhost:3000/api/webdav /home/jovyan/collections &
+NODE_PATH=/opt/proxy/ node /opt/proxy/app.js &
+
+# Wait for proxy to start
+sleep 2
+
+sudo dav_mount "http://localhost:3000/api/webdav" "/home/jovyan/collections" || {
+  echo "Error mounting webdav endpoint collections" >&2
+  exit 1
+}
 
 if [ ! -z "${EXTERNAL_TARGETS}" ]; then
     IFS=','
     for target in $EXTERNAL_TARGETS; do
-        mkdir -p "/home/jovyan/${target}"
-        fusedav "http://localhost:3000/api/storages/${target}/webdav" "/home/jovyan/${target}" &
+        sudo dav_mount "http://localhost:3000/api/storages/${target}/webdav" "/home/jovyan/${target}" || {
+          echo "Error mounting webdav endpoint ${target}" >&2
+          exit 1
+        }
     done
 fi
 

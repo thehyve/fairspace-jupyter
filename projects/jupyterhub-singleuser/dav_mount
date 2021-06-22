@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+####
+# Mounts a remote volume <remote> via WebDAV on mount point <path> using the davfs2 driver.
+# The script must be run as root.
+####
+
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $(basename $0) <remote> <path>" >&2
+    echo "E.g., $(basename $0) http://localhost:3000/api/webdav /home/jovyan/collections" >&2
+    exit 1
+fi
+
+remote=$1
+path=$2
+
+echo "Mounting ${remote} on ${path} ..."
+
+mkdir -p "${path}"
+echo "${remote} ${path} davfs rw,user,uid=jovyan,noauto,_netdev 0 0" >> /etc/fstab
+sudo mount "${path}" || {
+  echo "Error mounting webdav endpoint ${remote} on ${path}" >&2
+  exit 1
+}

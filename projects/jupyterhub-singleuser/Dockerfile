@@ -3,12 +3,22 @@ FROM jupyter/datascience-notebook:lab-3.0.16
 USER root
 
 RUN apt-get update && \
-    apt-get install -y vim curl fusedav && \
+    apt-get install -y vim curl davfs2 sudo && \
     rm -rf /var/lib/apt/lists/* /var/log/dpkg.log /var/log/apt/*
 
 ADD start /
 RUN chown jovyan:users /start
 RUN chmod u+x /start
+
+RUN adduser jovyan davfs2
+ADD dav_mount /usr/local/bin/
+RUN chmod u+x /usr/local/bin/dav_mount
+RUN echo "%davfs2 ALL=(ALL) NOPASSWD: /usr/local/bin/dav_mount *" > /etc/sudoers.d/dav_mount
+RUN echo "ask_auth 0" >> /etc/davfs2/davfs2.conf; \
+    echo "use_proxy 0" >> /etc/davfs2/davfs2.conf; \
+    echo "use_locks 0" >> /etc/davfs2/davfs2.conf; \
+    echo "min_propset 1" >> /etc/davfs2/davfs2.conf; \
+    echo "gui_optimize 1" >> /etc/davfs2/davfs2.conf
 
 ADD app.js /opt/proxy/
 ADD package.json /opt/proxy/
