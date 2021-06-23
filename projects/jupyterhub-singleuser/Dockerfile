@@ -1,10 +1,10 @@
-FROM jupyter/datascience-notebook:lab-2.0.1
+FROM jupyter/datascience-notebook:lab-3.0.16
 
 USER root
 
 RUN apt-get update && \
     apt-get install -y vim curl fusedav && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /var/log/dpkg.log /var/log/apt/*
 
 ADD start /
 RUN chown jovyan:users /start
@@ -15,7 +15,7 @@ ADD package.json /opt/proxy/
 WORKDIR /opt/proxy
 RUN npm install
 
-ADD atomiclargefilemanager.py /opt/conda/lib/python3.7/site-packages/notebook/services/contents/
+ADD atomiclargefilemanager.py /opt/conda/lib/python3.9/site-packages/notebook/services/contents/
 RUN echo "" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "from notebook.services.contents.atomiclargefilemanager import AtomicLargeFileManager" >> /etc/jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.contents_manager_class = AtomicLargeFileManager" >> /etc/jupyter/jupyter_notebook_config.py && \
