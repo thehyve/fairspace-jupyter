@@ -16,6 +16,7 @@ jupyterhub:
         client_id: workspace-client
         client_secret: '**********'
         authorize_url: http://localhost:5100/auth/realms/fairspace/protocol/openid-connect/auth
+        logout_redirect_url: http://localhost:5100/auth/realms/fairspace/protocol/openid-connect/logout?redirect_uri=http://jupyterhub.local
   singleuser:
     image:
       name: jupyterhub-singleuser-local

@@ -40,6 +40,7 @@ jupyterhub:
     custom:
       className: oauthenticator.fairspace.FairspaceOAuthenticator
       config:
+        login_service: Fairspace
         enable_auth_state: True
         username_key: preferred_username
         extra_params:
@@ -48,6 +49,7 @@ jupyterhub:
         client_secret:
         token_url:
         userdata_url:
+        logout_redirect_url:
     scopes:
       - offline_access
   singleuser:
@@ -75,7 +77,9 @@ jupyterhub:
       customConfig: |
         c.KubeSpawner.cmd = ['/start']
         c.KubeSpawner.privileged = True
-        c.Authenticator.auto_login = True
+        c.Authenticator.auto_login = False
+        c.RequestHandler.redirect_to_server = False
+        c.JupyterHub.shutdown_on_logout = True
     # Requests values are set in Jupyterhub chart.
     resources:
       limits:
