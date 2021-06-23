@@ -1,11 +1,11 @@
 {
-  "name": "keyclaok-auth-proxy",
+  "name": "keycloak-auth-proxy",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.5",
-    "keycloak-connect": "^11.0.2"
+    "http-proxy-middleware": "^2.0.0",
+    "keycloak-connect": "^14.0.0"
   }
 }
