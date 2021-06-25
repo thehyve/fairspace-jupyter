@@ -13,20 +13,6 @@ keycloak:
   username:
   password:
 
-# Scripts for configuring keycloak to accept jupyter connections
-configurationScripts:
-  keycloak:
-    enabled: false
-    image: eu.gcr.io/fairspace-207108/keycloak-configuration:0.1.3
-    pullPolicy: IfNotPresent
-    resources:
-      requests:
-        cpu: "50m"
-        memory: "512Mi"
-      limits:
-        cpu: "500m"
-        memory: "2048Mi"
-
 # Setup ingress for workspace components
 ingress:
     enabled: true
