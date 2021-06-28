@@ -16,4 +16,4 @@ if [ ! -z "${EXTERNAL_TARGETS}" ]; then
     done
 fi
 
-${JUPYTER_COMMAND}
+${JUPYTER_COMMAND} $@
