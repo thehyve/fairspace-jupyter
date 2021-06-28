@@ -2,6 +2,8 @@
 # charts/
 /data
 
+Chart.lock
+
 .env
 
 # Created by https://www.gitignore.io/api/osx,vim,java,cmake,emacs,gradle,kotlin,eclipse,netbeans,intellij,visualstudiocode
