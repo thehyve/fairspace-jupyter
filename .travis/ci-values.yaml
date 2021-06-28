@@ -13,6 +13,7 @@ jupyterhub:
         authorize_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/auth
         token_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/token
         userdata_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/userinfo
+        logout_redirect_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/logout?redirect_uri=https://jupyter.fairspace.ci.fairway.app
   singleuser:
     image:
       pullPolicy: Always
