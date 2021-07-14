@@ -3,22 +3,46 @@ FROM jupyter/datascience-notebook:lab-3.0.16
 USER root
 
 RUN apt-get update && \
-    apt-get install -y vim curl davfs2 sudo && \
+    apt-get install -y vim curl sudo gnupg libneon27-gnutls-dev patch && \
     rm -rf /var/lib/apt/lists/* /var/log/dpkg.log /var/log/apt/*
+
+ADD wbaumann-key.gpg /tmp/
+ADD cache.c.patch /tmp/
+
+RUN gpg --import /tmp/wbaumann-key.gpg && \
+    curl -fL https://download.savannah.nongnu.org/releases/davfs2/davfs2-1.6.0.tar.gz -o davfs2-1.6.0.tar.gz && \
+    curl -fL https://download.savannah.nongnu.org/releases/davfs2/davfs2-1.6.0.tar.gz.sig -o davfs2-1.6.0.tar.gz.sig && \
+    gpg --verify davfs2-1.6.0.tar.gz.sig && \
+    tar xfz davfs2-1.6.0.tar.gz && \
+    cd davfs2-1.6.0 && \
+    patch -p0 src/cache.c /tmp/cache.c.patch &&\
+    ./configure && \
+    make && \
+    make install && \
+    cd .. && \
+    rm -r davfs2-* && \
+    rm /tmp/cache.c.patch && \
+    rm /tmp/wbaumann-key.gpg
+
+RUN addgroup --system davfs2 && \
+    adduser --system davfs2 && \
+    adduser davfs2 davfs2 && \
+    adduser jovyan davfs2
 
 ADD start /
 RUN chown jovyan:users /start
 RUN chmod u+x /start
 
-RUN adduser jovyan davfs2
 ADD dav_mount /usr/local/bin/
 RUN chmod u+x /usr/local/bin/dav_mount
 RUN echo "%davfs2 ALL=(ALL) NOPASSWD: /usr/local/bin/dav_mount *" > /etc/sudoers.d/dav_mount
-RUN echo "ask_auth 0" >> /etc/davfs2/davfs2.conf; \
-    echo "use_proxy 0" >> /etc/davfs2/davfs2.conf; \
-    echo "use_locks 0" >> /etc/davfs2/davfs2.conf; \
-    echo "min_propset 1" >> /etc/davfs2/davfs2.conf; \
-    echo "gui_optimize 1" >> /etc/davfs2/davfs2.conf
+RUN echo "ask_auth 0" >> /usr/local/etc/davfs2/davfs2.conf; \
+    echo "use_proxy 0" >> /usr/local/etc/davfs2/davfs2.conf; \
+    echo "use_locks 0" >> /usr/local/etc/davfs2/davfs2.conf; \
+    echo "min_propset 1" >> /usr/local/etc/davfs2/davfs2.conf; \
+    echo "gui_optimize 1" >> /usr/local/etc/davfs2/davfs2.conf; \
+    echo "file_refresh 60" >> /usr/local/etc/davfs2/davfs2.conf; \
+    echo "dir_refresh 60" >> /usr/local/etc/davfs2/davfs2.conf
 
 ADD app.js /opt/proxy/
 ADD package.json /opt/proxy/
