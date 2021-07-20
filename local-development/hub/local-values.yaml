@@ -15,15 +15,18 @@ jupyterhub:
       config:
         client_id: workspace-client
         client_secret: '**********'
-        authorize_url: http://localhost:5100/auth/realms/fairspace/protocol/openid-connect/auth
-        logout_redirect_url: http://localhost:5100/auth/realms/fairspace/protocol/openid-connect/logout?redirect_uri=http://jupyterhub.local
+        authorize_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/auth
+        logout_redirect_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/logout?redirect_uri=http://jupyterhub.local
+        token_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/token
+        userdata_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/userinfo
+
   singleuser:
     image:
       name: jupyterhub-singleuser-local
       tag: latest
       pullPolicy: Never
     extraEnv:
-      TARGET_URL:
+      TARGET_URL: http://fairspace.local
       EXTERNAL_TARGETS:
   hub:
     image:
