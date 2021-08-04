@@ -1,5 +1,5 @@
 # Please note, this entry has been added manually
-# charts/
+/charts/**/charts/*.tgz
 /data
 
 Chart.lock
