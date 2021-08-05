@@ -54,13 +54,50 @@ curl -s -d "client_id=${CLIENT_ID}" -d "client_secret=${CLIENT_SECRET}" -d "user
 
 Update the `REFRESH_TOKEN` variable in the `.env` file.
 
-#### Build image
+#### Build images
 ```shell
-docker build ../projects/jupyterhub-singleuser -t jupyter-local:latest
+docker build ../projects/jupyterhub-singleuser -t jupyterhub-singleuser-local:latest
+docker build ../projects/jupyterhub-hub -t jupyterhub-hub-local:latest
 ```
 
-#### Run image
+#### Run singleuser image
 
 ```shell
-docker run --name jupyter-dev --rm -it --env-file .env -p 8888:8888 --privileged jupyter-local:latest /start
+# Run Jupyter notebook
+docker run --name jupyter-dev --rm -it --env-file .env -p 8888:8888 --privileged jupyterhub-singleuser-local:latest /start
+```
+
+#### Run Jupyter Hub using minikube
+
+Please check the [deploy.sh](hub/deploy.sh) script.
+It assumes Helm3 to be available in `~/bin/helm3/helm` and
+Keycloak to be running at http://localhost:5100.
+
+The ingress node will listen to http://jupyterhub.local, so make sure to
+- add `$(minikube ip) jupyterhub.local` to `/etc/hosts`:
+  ```shell
+  echo "$(minikube ip) jupyterhub.local" >> /etc/hosts
+  ```
+- add `http://jupyterhub.local/*` to _Valid Redirect URIs_ in Keycloak.
+
+To start Jupyter Hub:
+```shell
+# Start minikube
+minikube start
+minikube addons enable ingress
+
+# Open kubernetes dashboard
+minikube dashboard
+
+# Push images to minikube repository and start Jupyter Hub
+./hub/deploy.sh
+```
+The script creates the `jupyterhub-dev` namespace where all other objects are created.
+
+To shutdown Jupyter Hub, use one of the following:
+```shell
+# Uninstall Jupyter Hub using Helm
+helm uninstall jupyterhub-local -n jupyterhub-dev
+# Delete jupyterhub-dev namespace
+kubectl delete ns jupyterhub-dev
 ```

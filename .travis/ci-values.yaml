@@ -3,26 +3,24 @@ ingress:
 
 # Specific settings for JupyterHub subchart
 jupyterhub:
-  auth:
-    state:
-      cryptoKey: 61efcb6349da848c361e13c0edfac1486d636ef89a2b7cbba610e83d8a332026
-    custom:
-      config:
+  hub:
+    image:
+      pullPolicy: Always
+    extraEnv:
+      JUPYTERHUB_CRYPT_KEY: 61efcb6349da848c361e13c0edfac1486d636ef89a2b7cbba610e83d8a332026
+    config:
+      FairspaceOAuthenticator:
         client_id: fairspace-ci-private
-        client_secret: 4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
+        client_secret: 1877ac71-15ad-4245-bea8-d57c9cbaf3ce
         authorize_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/auth
         token_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/token
         userdata_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/userinfo
+        logout_redirect_url: https://keycloak.ci.fairway.app/auth/realms/ci/protocol/openid-connect/logout?redirect_uri=https://jupyter.fairspace.ci.fairway.app
   singleuser:
     image:
       pullPolicy: Always
     extraEnv:
       TARGET_URL: https://fairspace.ci.fairway.app
       EXTERNAL_TARGETS: test
-  hub:
-    image:
-      pullPolicy: Always
-    extraEnv:
-      JUPYTERHUB_CRYPT_KEY: 61efcb6349da848c361e13c0edfac1486d636ef89a2b7cbba610e83d8a332026
   proxy:
     secretToken: 7a437e0359eca81661e82836965bf2b5dc07db4ff10b7686cb18762e601799d9

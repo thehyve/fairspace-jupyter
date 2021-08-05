@@ -22,3 +22,24 @@ http://{{ .Values.ingress.domain }}
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "jupyter.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Common labels
+*/}}
+{{- define "jupyter.labels" -}}
+chart: {{ include "jupyter.chart" . }}
+release: {{ .Release.Name }}
+heritage: {{ .Release.Service }}
+helm.sh/chart: {{ include "jupyter.chart" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/release-name: {{ .Release.Name }}
+{{- end }}

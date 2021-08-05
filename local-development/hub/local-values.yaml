@@ -1,0 +1,43 @@
+host:
+  address: host.minikube.internal
+
+ingress:
+  domain: jupyterhub.local
+  tls:
+    enabled: false
+
+# Specific settings for JupyterHub subchart
+jupyterhub:
+  hub:
+    image:
+      name: jupyterhub-hub-local
+      tag: latest
+      pullPolicy: Never
+    extraEnv:
+      JUPYTERHUB_CRYPT_KEY: 61efcb6349da848c361e13c0edfac1486d636ef89a2b7cbba610e83d8a332026
+    config:
+      FairspaceOAuthenticator:
+        client_id: workspace-client
+        client_secret: '**********'
+        authorize_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/auth
+        logout_redirect_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/logout?redirect_uri=http://jupyterhub.local
+        token_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/token
+        userdata_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/userinfo
+
+  singleuser:
+    image:
+      name: jupyterhub-singleuser-local
+      tag: latest
+      pullPolicy: Never
+    extraEnv:
+      TARGET_URL: http://fairspace.local
+      EXTERNAL_TARGETS:
+
+  prePuller:
+    hook:
+      enabled: false
+    continuous:
+      enabled: false
+
+  proxy:
+    secretToken: 7a437e0359eca81661e82836965bf2b5dc07db4ff10b7686cb18762e601799d9

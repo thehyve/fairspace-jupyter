@@ -26,7 +26,7 @@ ingress:
 # Additional jupyter-specific variables 
 ```
 
-Then use the procedure at <https://wiki.thehyve.nl/display/VRE/Deploying+Fairspace+on+GCP>
+Then use the procedure at <https://docs.fairway.app/#_installation_and_configuration>
 for deploying the application.
 
 ### On Minikube
@@ -49,7 +49,7 @@ installation.
 | Parameter  | Description  | Default |
 |---|---|---|
 | `ingress.enabled`  | Whether or not an ingress is setup for Jupyter. Should be set to false when running locally.  | true |
-| `ingress.domain`   | Domain that is used for setting up the workspace. Is used as postfix for the hostname for the specific components. For example setting `fairspace.app` as domain will setup jupyterhub at `jupyterhub.fairspace.app`  | workspace.ci.test.fairdev.app  |
+| `ingress.domain`   | Domain that is used for setting up the workspace. Is used as postfix for the hostname for the specific components. For example setting `fairspace.app` as domain will setup jupyterhub at `jupyterhub.fairspace.app`  |  |
 | `ingress.tls.enabled`  | Whether or not an TLS is enabled on the ingresses for workspace  | true  |
 | `ingress.tls.secretNameOverride`  | If set, this secret name is used for loading certificates for TLS. | `tls-<release name>` |
 | `ingress.tls.certificate.obtain`  | If set, a `Certificate` object will be created, such that [cert-manager](https://cert-manager.readthedocs.io/en/latest/) will request a certificate automatically. | true |
@@ -62,7 +62,7 @@ installation.
 | `keycloak.loginRealm`   | By default the keycloak user logs in to the master realm. However, the script can also be run by a realm-admin of the realm that must be configured. Please note that the user needs the realm-management/realm-admin to configure the workspace.  |   |
 | `keycloak.username`   | Username to use for the keycloak admin user.  |   |
 | `keycloak.password`   | Password to use for the keycloak admin user  |   |
-| `jupyterhub.auth.custom.config.client_id`  | Client ID of the client to use for OpenID |   |
+| `jupyterhub.hub.config.FairspaceOAuthenticator.client_id`  | Client ID of the client to use for OpenID |   |
 
 #### Tool configuration
 Configuration settings for specific applications should be put under a corresponding section in config.yaml:
@@ -70,25 +70,3 @@ Configuration settings for specific applications should be put under a correspon
 * Jupyterhub
 Settings for Jupyterhub should be in the section `jupyterhub`.
 See [the Jupyterhub docs](http://zero-to-jupyterhub.readthedocs.io/en/latest/user-environment.html) for more information on the specific settings
-
-## Image pull secrets
-When pulling docker images from a private repository, k8s needs credentials to do so. This can be configured using [image pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry).
-To use the secret for installing a workspace, follow these steps:
-- Add [credentials for jupyterhub](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/master/jupyterhub/values.yaml#L55) separately:
-  ```yaml
-    jupyterhub:
-      hub:
-        imagePullSecret:
-          enabled: true
-          registry: eu.gcr.io
-          username: ...
-          email: ...
-          password: ...
-      singleuser:
-        imagePullSecret:
-          enabled: true
-          registry: eu.gcr.io
-          username: ...
-          email: ...
-          password: ...
-  ```

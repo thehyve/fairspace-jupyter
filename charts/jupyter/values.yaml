@@ -13,48 +13,45 @@ keycloak:
   username:
   password:
 
-# Scripts for configuring keycloak to accept jupyter connections
-configurationScripts:
-  keycloak:
-    enabled: false
-    image: eu.gcr.io/fairspace-207108/keycloak-configuration:0.1.3
-    pullPolicy: IfNotPresent
-    resources:
-      requests:
-        cpu: "50m"
-        memory: "512Mi"
-      limits:
-        cpu: "500m"
-        memory: "2048Mi"
-
 # Setup ingress for workspace components
 ingress:
+  enabled: true
+  domain:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 10g
+  tls:
     enabled: true
-    domain:
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-body-size: 10g
-    tls:
-        enabled: true
-        secretNameOverride:
-        certificate:
-            obtain: true
-            issuerRef:
-                name: letsencrypt-prod
-                kind: ClusterIssuer
+    secretNameOverride:
+    certificate:
+      obtain: true
+      issuerRef:
+        name: letsencrypt-prod
+        kind: ClusterIssuer
 
 #####################################################################
 # Specific settings for JupyterHub subchart
 #####################################################################
 jupyterhub:
-  rbac:
-    enabled: true
-  auth:
-    type: custom
-    custom:
-      className: oauthenticator.fairspace.FairspaceOAuthenticator
-      config:
-        enable_auth_state: True
+  hub:
+    image:
+      name: eu.gcr.io/fairspace-207108/jupyterhub-hub
+      tag: RELEASEVERSION
+    extraEnv:
+      JUPYTERHUB_CRYPT_KEY:
+    config:
+      JupyterHub:
+        authenticator_class: oauthenticator.fairspace.FairspaceOAuthenticator
+        shutdown_on_logout: true
+      KubeSpawner:
+        cmd: /start
+        privileged: true
+      RequestHandler:
+        redirect_to_server: false
+      FairspaceOAuthenticator:
+        login_service: Fairspace
+        auto_login: false
+        enable_auth_state: true
         username_key: preferred_username
         extra_params:
           scope: offline_access
@@ -62,8 +59,13 @@ jupyterhub:
         client_secret:
         token_url:
         userdata_url:
-    scopes:
-      - offline_access
+        logout_redirect_url:
+    # Requests values are set in Jupyterhub chart.
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+
   singleuser:
     image:
       name: eu.gcr.io/fairspace-207108/jupyterhub-singleuser
@@ -77,24 +79,7 @@ jupyterhub:
       guarantee: 0.1
     memory:
       limit: 1G
-  hub:
-    image:
-      name: eu.gcr.io/fairspace-207108/jupyterhub-hub
-      tag: RELEASEVERSION
-    ingress:
-      enabled: false
-    extraEnv:
-      JUPYTERHUB_CRYPT_KEY:
-    extraConfig:
-      customConfig: |
-        c.KubeSpawner.cmd = ['/start']
-        c.KubeSpawner.privileged = True
-        c.Authenticator.auto_login = True
-    # Requests values are set in Jupyterhub chart.
-    resources:
-      limits:
-        cpu: 200m
-        memory: 512Mi
+
   proxy:
     chp:
       resources:
@@ -108,15 +93,37 @@ jupyterhub:
     # length as the actual values
     # Ensure to override this value with a 64-character hex string when installing
     secretToken: "0000000000000000000000000000000000000000000000000000000000000000"
+
   scheduling:
     userScheduler:
       enabled: false
       pdb:
         enabled: false
+      resources:
+        requests:
+          cpu: 50m
+          memory: 256Mi
     podPriority:
       enabled: false
     userPlaceholder:
       enabled: false
+
+  prePuller:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+    hook:
+      resources:
+        requests:
+          cpu: 0
+          memory: 0
+
+  ingress:
+    enabled: false
+
+  rbac:
+    enabled: true
 
 # Pod annotations should remain empty. They are filled within the build process
 podAnnotations: {}
