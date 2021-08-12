@@ -9,6 +9,7 @@ env:
      - ARTIFACT_BUILD_FILE=""
      - BUILD_SCRIPTS_REPO="fairspace/build-scripts"
      - DEPLOYMENT_CONFIG_DIR="./.travis"
+     - ACCOUNT_CONFIG_DIR="./.travis"
      - RELEASE_BRANCH="master"
      - SNAPSHOT_BRANCH="dev"
      - DOCKER_USERNAME="fairspace"
