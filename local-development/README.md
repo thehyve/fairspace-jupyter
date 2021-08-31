@@ -8,36 +8,21 @@ You can run the docker images locally for testing.
 
 Create `.env` file:
 
-- For connecting to CI:
-    ```shell
-    KEYCLOAK_SERVER_URL=https://keycloak.ci.fairway.app
-    KEYCLOAK_REALM=fairspace
-    KEYCLOAK_USERNAME=user
-    KEYCLOAK_PASSWORD=fairspace123
+For connecting to a local development instance:
+```shell
+KEYCLOAK_SERVER_URL=http://localhost:5100
+KEYCLOAK_REALM=fairspace
+KEYCLOAK_USERNAME=user
+KEYCLOAK_PASSWORD=fairspace123
+    
+TARGET_URL=http://172.17.0.1:8080
+REALM_URL=http://172.17.0.1:5100/auth/realms/fairspace
+CLIENT_ID=workspace-client
+CLIENT_SECRET=**********
+REFRESH_TOKEN=...
 
-    TARGET_URL=https://fairspace.ci.fairway.app
-    REALM_URL=https://keycloak.ci.fairway.app/auth/realms/ci
-    CLIENT_ID=fairspace-ci-private
-    CLIENT_SECRET=4c4e5e3b-a6ed-45fd-a394-46c4f5eea510
-    REFRESH_TOKEN=...
-    
-    JUPYTER_COMMAND=jupyter-notebook
-    ```
-- For connecting to a local development instance:
-    ```shell
-    KEYCLOAK_SERVER_URL=http://localhost:5100
-    KEYCLOAK_REALM=fairspace
-    KEYCLOAK_USERNAME=user
-    KEYCLOAK_PASSWORD=fairspace123
-    
-    TARGET_URL=http://172.17.0.1:8080
-    REALM_URL=http://172.17.0.1:5100/auth/realms/fairspace
-    CLIENT_ID=workspace-client
-    CLIENT_SECRET=**********
-    REFRESH_TOKEN=...
-    
-    JUPYTER_COMMAND=jupyter-notebook
-    ```
+JUPYTER_COMMAND=jupyter-notebook
+```
 
 To mount external storages that are configured in Fairspace, include `EXTERNAL_TARGETS` variable
 as a comma-separated list of unique storage names (same as used in Fairspace configuration):

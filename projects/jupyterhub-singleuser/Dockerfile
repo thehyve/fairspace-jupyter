@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get install -y vim curl sudo libneon27-gnutls-dev po4a automake && \
     rm -rf /var/lib/apt/lists/* /var/log/dpkg.log /var/log/apt/*
 
-RUN curl -fL https://github.com/fairspace/davfs2/archive/refs/heads/fairspace.zip -o davfs2-fairspace.zip && \
+RUN curl -fL https://github.com/thehyve/davfs2/archive/refs/heads/fairspace.zip -o davfs2-fairspace.zip && \
     unzip davfs2-fairspace.zip && \
     cd davfs2-fairspace && \
     ./bootstrap && \
