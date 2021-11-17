@@ -10,6 +10,7 @@ NODE_PATH=/opt/proxy/ node /opt/proxy/app.js &
 # Wait for proxy to start
 sleep 2
 
+sudo ln -s /proc/self/mounts /etc/mtab
 sudo dav_mount "http://localhost:3000/api/webdav" "/home/jovyan/collections" || {
   echo "Error mounting webdav endpoint collections" >&2
   exit 1
@@ -24,5 +25,9 @@ if [ ! -z "${EXTERNAL_TARGETS}" ]; then
         }
     done
 fi
+
+unset CLIENT_ID
+unset CLIENT_SECRET
+unset REFRESH_TOKEN
 
 ${JUPYTER_COMMAND} $@
