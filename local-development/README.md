@@ -69,6 +69,17 @@ To start Jupyter Hub:
 ```shell
 # Start minikube
 minikube start
+```
+---
+**NOTE**
+
+To run use **containerd** instead of **docker** as CRI runtime,
+use `--container-runtime=containerd` property for the start command
+and change the `container_runtime` property in `./hub/deploy.sh` to "containerd".
+
+
+---
+```
 minikube addons enable ingress
 
 # Open kubernetes dashboard
