@@ -17,6 +17,7 @@ echo "Mounting ${remote} on ${path} ..."
 
 mkdir -p "${path}"
 echo "${remote} ${path} davfs rw,user,uid=jovyan,noauto,_netdev 0 0" >> /etc/fstab
+ln -s /proc/self/mounts /etc/mtab
 
 davfs_mount_err=$(sudo mount "${path}" 2>&1 > /dev/null)
 
