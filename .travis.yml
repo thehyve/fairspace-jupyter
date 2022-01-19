@@ -15,14 +15,16 @@ env:
      - DOCKER_USERNAME="fairspace"
      - GITHUB_USERNAME="fairspace-ci"
      - NEXUS_USERNAME="travis-fairspace"
-     - GCP_PROJECT="fairspace-207108"
-     - SNAPSHOT_CONTEXT="gke_fairspace-207108_europe-west1-b_fairspacecicluster"
-     - SNAPSHOT_CLUSTER_NAME="fairspacecicluster"
-     - SNAPSHOT_CLUSTER_ZONE="europe-west1-b"
-     - RELEASE_CONTEXT="gke_fairspace-207108_europe-west1-b_fairspacecicluster"
-     - RELEASE_CLUSTER_NAME="fairspacecicluster"
-     - RELEASE_CLUSTER_ZONE="europe-west1-b"
      - GIT_TAG_FILES_OVERRIDE="charts/jupyter/Chart.yaml charts/jupyter/values.yaml projects/"
+     - SHOULD_DEPLOY=false
+     # DEPLOYMENT RELATED VARIABLES - REQUIRED IF SHOULD_DEPLOY=true
+     # - GCP_PROJECT="fairspace-207108"
+     # - SNAPSHOT_CONTEXT="gke_fairspace-207108_europe-west1-b_fairspacecicluster"
+     # - SNAPSHOT_CLUSTER_NAME="fairspacecicluster"
+     # - SNAPSHOT_CLUSTER_ZONE="europe-west1-b"
+     # - RELEASE_CONTEXT="gke_fairspace-207108_europe-west1-b_fairspacecicluster"
+     # - RELEASE_CLUSTER_NAME="fairspacecicluster"
+     # - RELEASE_CLUSTER_ZONE="europe-west1-b"
 
      # DOCKER_PASSWORD=
      - secure: "rINH6k9VSyv0N2vmle6xtT9gB3eSilSVsAmHRln4qkLTWHjLW7jjouehqFiRrdrnzFP+NIaAUdvP6ox3MhtZEFpW/pog0fZSMijpidlsHr9uCbsxhrGXjcZuzwtazaqQ/7+9RP+ofb7j6tPqt5HLCwn0pviom4qc9GztTahJwg9uNa6naiCWqIAkn7w5yqcPQZp6sgjcMYF+pKL6OQHywGp07qatozgqYkZGjtBD7QOKfNDNycVewtMQwI+CIno1/STk9kS0lECfIabETVYwt9Hzjk6811NFAwdKWVrgG+1MOU59uJC/CVbEpEfY/m1vWneWJ68L+DyYlcvzY2/pVC2A+T0L0YzhdiFCQC2xr81ODq7AQ0Y4KdYYrnewP8vJhD2zoJmfucdLpX0f93Q9k1oTd9I3sVbNK+J28N8PE6rc72t1uUA6Tzvht+OyJo5W+h4vm8zs0aWIFVLR6r0ShmindyBI0CFi6VbrvxMTNmzH1PM23oLCs3V66CTiHBBlmxEYud99zLt97/WW74DSju17wosPR9O1G2FlVPlRdhF1S7ELCN1WlFgwll7Ssy5Nk/jWqNK004+Ked3g676a38plphuOQLRKSFD7L1rh4tXli09/xjq8AXBjzyWVEUPHVFnKmDZMcQlixBVuO1FhpS6uFDLOzF6N2bfJkR8lwqI="
@@ -40,10 +42,10 @@ before_install:
   - export KUBE_CONFIG_ENC_IV=$encrypted_f973873e750b_iv
   - git clone https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/$BUILD_SCRIPTS_REPO ci
   - export BUILD_SCRIPTS_DIR=$(pwd)/ci
-  - git clone https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/$DEPLOYMENT_CONFIG_REPO ci-config
-  - export DEPLOYMENT_CONFIG_DIR="$(pwd)/ci-config/fairspace-jupyter"
-  - 'if [[ "$TRAVIS_BRANCH" = "$SNAPSHOT_BRANCH" ]]; then export ALLOW_SNAPSHOTS=1 DEPLOY_TARGET=ci DEPLOY_PLATFORM="GCP" KUBERNETES_CONTEXT="$SNAPSHOT_CONTEXT" CLUSTER_NAME="$SNAPSHOT_CLUSTER_NAME" CLUSTER_ZONE="$SNAPSHOT_CLUSTER_ZONE" ; fi'
-  - 'if [[ "$TRAVIS_BRANCH" = "$RELEASE_BRANCH" ]]; then export DEPLOY_TARGET=ci DEPLOY_PLATFORM="GCP" KUBERNETES_CONTEXT="$RELEASE_CONTEXT" CLUSTER_NAME="$RELEASE_CLUSTER_NAME" CLUSTER_ZONE="$RELEASE_CLUSTER_ZONE" ; fi'
+  - 'if [[ "$SHOULD_DEPLOY" = "true" ]]; then git clone https://$GITHUB_USERNAME:$GITHUB_PASSWORD@github.com/$DEPLOYMENT_CONFIG_REPO ci-config ; fi'
+  - 'if [[ "$SHOULD_DEPLOY" = "true" ]]; then export DEPLOYMENT_CONFIG_DIR="$(pwd)/ci-config/fairspace-jupyter" ; fi'
+  - 'if [[ "$SHOULD_DEPLOY" = "true" ]] && [[ "$TRAVIS_BRANCH" = "$SNAPSHOT_BRANCH" ]]; then export ALLOW_SNAPSHOTS=1 DEPLOY_TARGET=ci DEPLOY_PLATFORM="GCP" KUBERNETES_CONTEXT="$SNAPSHOT_CONTEXT" CLUSTER_NAME="$SNAPSHOT_CLUSTER_NAME" CLUSTER_ZONE="$SNAPSHOT_CLUSTER_ZONE" ; fi'
+  - 'if [[ "$SHOULD_DEPLOY" = "true" ]] &&[[ "$TRAVIS_BRANCH" = "$RELEASE_BRANCH" ]]; then export DEPLOY_TARGET=ci DEPLOY_PLATFORM="GCP" KUBERNETES_CONTEXT="$RELEASE_CONTEXT" CLUSTER_NAME="$RELEASE_CLUSTER_NAME" CLUSTER_ZONE="$RELEASE_CLUSTER_ZONE" ; fi'
   - export INFRASTRUCTURE_PLATFORM="${DEPLOY_PLATFORM:-NONE}"
   - source ./ci/setup_env.sh
   - 'if [[ "$SHOULD_RELEASE" ]] ; then export NEED_INTERNAL_HELM=1 ; fi'
@@ -74,7 +76,7 @@ jobs:
       - "ci/versioning/set_next_version.sh"
     - stage: deploy
       cache: false
-      if: branch IN (env(RELEASE_BRANCH), env(SNAPSHOT_BRANCH)) AND type != pull_request
+      if: env(SHOULD_DEPLOY) = true AND branch IN (env(RELEASE_BRANCH), env(SNAPSHOT_BRANCH)) AND type != pull_request
       install:
         - source charts/.travis/install.sh
       script:
