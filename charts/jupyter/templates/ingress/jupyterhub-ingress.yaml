@@ -1,6 +1,6 @@
 {{- $ingress := .Values.ingress -}}
 {{- if $ingress.enabled -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: jupyterhub-ingress
@@ -22,9 +22,12 @@ spec:
       http:
         paths:
           - path: /
+            pathType: ImplementationSpecific
             backend:
-              serviceName: proxy-public
-              servicePort: 80
+              service:
+                name: proxy-public
+                port:
+                  number: 80
 {{- end -}}
 
 
