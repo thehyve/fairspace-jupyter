@@ -31,6 +31,7 @@ jupyterhub:
       pullPolicy: Never
     extraEnv:
       TARGET_URL: http://fairspace.local
+      ANALYSIS_EXPORT_TARGET: analysis-exports
       EXTERNAL_TARGETS:
 
   prePuller:

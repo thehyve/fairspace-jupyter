@@ -73,6 +73,7 @@ jupyterhub:
     defaultUrl: "/lab"
     extraEnv:
       TARGET_URL:
+      ANALYSIS_EXPORT_TARGET:
       EXTERNAL_TARGETS:
     cpu:
       limit: 0.5
