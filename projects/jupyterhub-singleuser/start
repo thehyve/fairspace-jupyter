@@ -10,11 +10,19 @@ NODE_PATH=/opt/proxy/ node /opt/proxy/app.js &
 # Wait for proxy to start
 sleep 2
 
+# Mount Fairspace collections
 sudo dav_mount "http://localhost:3000/api/webdav" "/home/jovyan/collections" || {
   echo "Error mounting webdav endpoint collections" >&2
   exit 1
 }
 
+# Mount extra Fairspace storage for analysis exports
+if [ ! -z "${ANALYSIS_EXPORT_TARGET}" ]; then
+  sudo dav_mount "http://localhost:3000/api/extra-storage/${ANALYSIS_EXPORT_TARGET}" "/home/jovyan/fairspace-metadata-exports" || {
+    echo "Error mounting webdav endpoint collections" >&2
+}
+
+# Mount external storages
 if [ ! -z "${EXTERNAL_TARGETS}" ]; then
     IFS=','
     for target in $EXTERNAL_TARGETS; do
