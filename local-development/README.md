@@ -24,10 +24,9 @@ REFRESH_TOKEN=...
 JUPYTER_COMMAND=jupyter-notebook
 ```
 
-In order to mount files exported from Fairspace to extra storage for further analysis in JupyterHub, include `ANALYSIS_EXPORT_TARGET` variable
-as a unique Fairspace extra storage root collection (same as used in Fairspace configuration):
+In order to mount files exported from Fairspace to extra storage for further analysis in JupyterHub, include `ANALYSIS_EXPORT_TARGET` variable linking to the name of the unique Fairspace extra storage root collection (make sure the name is the same as used in Fairspace configuration):
 ```shell
-ANALYSIS_EXPORT_TARGET=analysis-exports
+ANALYSIS_EXPORT_TARGET=analysis-export
 ```
 
 To mount external storages that are configured in Fairspace, include `EXTERNAL_TARGETS` variable
