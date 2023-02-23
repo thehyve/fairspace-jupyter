@@ -19,8 +19,9 @@ sudo dav_mount "http://localhost:3000/api/webdav" "/home/jovyan/collections" || 
 # Mount extra Fairspace storage for analysis exports
 if [ ! -z "${ANALYSIS_EXPORT_TARGET}" ]; then
   sudo dav_mount "http://localhost:3000/api/extra-storage/${ANALYSIS_EXPORT_TARGET}" "/home/jovyan/fairspace-metadata-exports" || {
-    echo "Error mounting webdav endpoint collections" >&2
-}
+    echo "Error mounting ${ANALYSIS_EXPORT_TARGET} endpoint collections" >&2
+  }
+fi
 
 # Mount external storages
 if [ ! -z "${EXTERNAL_TARGETS}" ]; then
