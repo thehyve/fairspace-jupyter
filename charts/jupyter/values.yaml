@@ -60,6 +60,7 @@ jupyterhub:
         logout_redirect_url:
         scope:
         - offline_access
+        - openid
     # Requests values are set in Jupyterhub chart.
     resources:
       limits:
