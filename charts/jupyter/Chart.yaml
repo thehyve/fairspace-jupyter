@@ -6,5 +6,5 @@ version: 0.0.0-RELEASEVERSION
 
 dependencies:
 - name: jupyterhub
-  version: "1.0.0"
+  version: "2.0.0"
   repository: https://jupyterhub.github.io/helm-chart/

@@ -13,8 +13,9 @@ fi
 remote=$1
 path=$2
 
-echo "Mounting ${remote} on ${path} ..."
+ln -s /usr/local/sbin/mount.davfs /sbin/mount.davfs
 
+echo "Mounting ${remote} on ${path} ..."
 mkdir -p "${path}"
 echo "${remote} ${path} davfs rw,user,uid=jovyan,noauto,_netdev 0 0" >> /etc/fstab
 if [ ! -f "/etc/mtab" ] ; then
@@ -28,6 +29,7 @@ if [ ! -z "$davfs_mount_err" ]; then
   err_code=$(echo $davfs_mount_err | grep -oP "^$err_prefix\K.*")
   if [ "$err_code" != "403 Forbidden" ]; then
     echo "Error mounting webdav endpoint ${remote} on ${path}: ${err_code}" >&2
+    echo "Error: ${davfs_mount_err}"
     exit 1
   fi
 fi

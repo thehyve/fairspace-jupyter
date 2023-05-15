@@ -1,6 +1,6 @@
 import os
 import shutil
-from notebook.services.contents.largefilemanager import LargeFileManager
+from jupyter_server.services.contents.largefilemanager import LargeFileManager
 from os import makedirs
 from os.path import expanduser
 from uuid import uuid4
