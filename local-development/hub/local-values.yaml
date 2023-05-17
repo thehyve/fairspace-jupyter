@@ -19,10 +19,10 @@ jupyterhub:
       FairspaceOAuthenticator:
         client_id: workspace-client
         client_secret: '**********'
-        authorize_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/auth
-        logout_redirect_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/logout?redirect_uri=http://jupyterhub.local
-        token_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/token
-        userdata_url: http://keycloak.local/auth/realms/fairspace/protocol/openid-connect/userinfo
+        authorize_url: http://keycloak.local/realms/fairspace/protocol/openid-connect/auth
+        logout_redirect_url: http://keycloak.local/realms/fairspace/protocol/openid-connect/logout?post_logout_redirect_uri=http://jupyterhub.local
+        token_url: http://keycloak.local/realms/fairspace/protocol/openid-connect/token
+        userdata_url: http://keycloak.local/realms/fairspace/protocol/openid-connect/userinfo
 
   singleuser:
     image:

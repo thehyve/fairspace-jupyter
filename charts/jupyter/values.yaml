@@ -60,6 +60,7 @@ jupyterhub:
         logout_redirect_url:
         scope:
         - offline_access
+        - openid
     # Requests values are set in Jupyterhub chart.
     resources:
       limits:
@@ -75,6 +76,7 @@ jupyterhub:
       TARGET_URL:
       ANALYSIS_EXPORT_TARGET:
       EXTERNAL_TARGETS:
+    allowPrivilegeEscalation: true
     cpu:
       limit: 0.5
       guarantee: 0.1
@@ -124,7 +126,7 @@ jupyterhub:
     enabled: false
 
   rbac:
-    enabled: true
+    create: true
 
 # Pod annotations should remain empty. They are filled within the build process
 podAnnotations: {}
