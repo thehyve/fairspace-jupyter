@@ -2,9 +2,6 @@ FROM jupyter/datascience-notebook:lab-3.6.3
 
 USER root
 
-
-RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' /etc/apt/apt.conf.d/docker-clean
-
 RUN apt-get update && \
     apt-get install -y vim curl sudo libneon27-gnutls-dev po4a automake && \
     rm -rf /var/lib/apt/lists/* /var/log/dpkg.log /var/log/apt/*
