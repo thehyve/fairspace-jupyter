@@ -2,9 +2,12 @@ FROM jupyter/datascience-notebook:lab-3.6.3
 
 USER root
 
-RUN apt-get update && \
-    apt-get install -y vim curl sudo libneon27-gnutls-dev po4a automake && \
-    rm -rf /var/lib/apt/lists/* /var/log/dpkg.log /var/log/apt/*
+
+RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
+      /etc/apt/apt.conf.d/docker-clean
+RUN apt update && \
+    apt install -y vim curl sudo libneon27-gnutls-dev po4a automake && \
+    apt clean && apt autoclean
 
 RUN curl -fL https://github.com/thehyve/davfs2/archive/refs/heads/fairspace_davfs2_upgrade.zip -o davfs2-fairspace_davfs2_upgrade.zip && \
     unzip davfs2-fairspace_davfs2_upgrade.zip && \
