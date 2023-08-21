@@ -44,6 +44,8 @@ RUN R -e 'install.packages("rtk", repos = "https://cloud.r-project.org")'
 RUN fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+COPY overrides.json ${CONDA_DIR}/share/jupyter/lab/settings/overrides.json
+
 USER root
 
 RUN curl -fL https://github.com/thehyve/davfs2/archive/refs/heads/fairspace_davfs2_upgrade.zip -o davfs2-fairspace_davfs2_upgrade.zip && \
